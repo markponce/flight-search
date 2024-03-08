@@ -7,5 +7,5 @@ class OfflineFavoritesRepository(private val favoriteDao: FavoriteDao): Favorite
 
     override fun getFavoriteRoutesByDepartureCode(code: String): Flow<List<Favorite>>   =favoriteDao.getFavoriteRoutesByDepartureCode(code)
     override suspend fun insertFavoriteRoute(favorite: Favorite)  = favoriteDao.insertFavoriteRoute(favorite)
-    override suspend fun deleteFavoriteRoute(departureCode: String, destinationCode: String) = favoriteDao.deleteFavoriteRoute(departureCode, destinationCode)
+    override suspend fun deleteFavoriteRoute(favorite: Favorite) = favoriteDao.deleteFavoriteRoute(favorite)
 }

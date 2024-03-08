@@ -86,31 +86,17 @@ fun SearchScreen(
 fun SearchScreenBody(modifier: Modifier = Modifier) {
 
     val searchViewModel: SearchViewModel = viewModel(factory = AppViewModelProvider.Factory)
-    val searchValueString by searchViewModel.searchQuery.collectAsState()
-    val airports by searchViewModel.airports.collectAsState()
-//    val context = LocalContext.current;
-    val selectedAirport by searchViewModel.selectedAirport.collectAsState()
-    val flights by searchViewModel.flights.collectAsState()
-    val favoritesBySelectedAirport by searchViewModel.favoritesBySelectedAirport.collectAsState()
-    val allFavorites by searchViewModel.allFavorites.collectAsState()
-    val flightsWitFavorites = flights.map { fl ->
-        if (favoritesBySelectedAirport.find { fav -> fav.destinationCode == fl.arrive.code } != null) {
-            fl.copy(isFavorite = true)
-        } else {
-            fl
-        }
-
-    }
+    val uiState by searchViewModel.uiState.collectAsState()
 
     Column(modifier = modifier.padding(16.dp)) {
         TextField(
-            value = searchValueString,
+            value = uiState.searchText,
             onValueChange = { searchViewModel.updateSearchQuery(it) },
             modifier = Modifier.fillMaxWidth()
         )
-        if (selectedAirport == null) {
+        if (uiState.selectedAirport == null) {
             LazyColumn(modifier = Modifier) {
-                items(items = airports) { airport ->
+                items(items = uiState.airports) { airport ->
                     Row(modifier = Modifier.clickable {
                         searchViewModel.updateSelectedAirport(airport)
                     }) {
@@ -121,24 +107,24 @@ fun SearchScreenBody(modifier: Modifier = Modifier) {
                 }
             }
         }
-
-        if (selectedAirport != null) {
+//
+        if (uiState.selectedAirport != null) {
             FlightCardList(
-                title = "Flights from ${selectedAirport?.code}",
-                flights = flightsWitFavorites,
-                onFavoriteTap = searchViewModel::addToFavoriteRoutes
+                title = "Flights from ${uiState.selectedAirport?.code}",
+                flights = uiState.flightsBySelectedAirport,
+                onFavoriteTap = searchViewModel::toggleAddToFavorites
 
             )
         }
-
-        if (allFavorites.isNotEmpty() && searchValueString.isEmpty()) {
+//
+        if (uiState.favoriteFlights.isNotEmpty() && uiState.searchText.isEmpty()) {
             FlightCardList(
-                flights = allFavorites.map { it.toFlight() },
-                onFavoriteTap = searchViewModel::addToFavoriteRoutes
+                flights = uiState.favoriteFlights,
+                onFavoriteTap = searchViewModel::toggleAddToFavorites
             )
         }
-
-
+//
+//
     }
 }
 
@@ -194,7 +180,7 @@ fun FlightCard(
                 verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_small)),
                 modifier = Modifier.weight(1f)
             ) {
-                Text(text = "DEPART")
+                Text(text = "DEPART" + " " + flight.favId)
                 Text(text = flight.formatFlightString(flight.depart))
                 Text(text = "ARRIVE")
                 Text(text = flight.formatFlightString(flight.arrive))

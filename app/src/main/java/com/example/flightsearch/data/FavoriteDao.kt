@@ -25,6 +25,8 @@ interface FavoriteDao {
     @Insert
     suspend fun insertFavoriteRoute(favorite: Favorite)
 
-    @Query("delete from favorite where departure_code = :departureCode and destination_code =:destinationCode")
-    suspend fun deleteFavoriteRoute(departureCode: String, destinationCode: String)
+//    @Query("delete from favorite where departure_code = :departureCode and destination_code =:destinationCode")
+    @Delete
+    suspend fun deleteFavoriteRoute(favorite: Favorite)
+
 }

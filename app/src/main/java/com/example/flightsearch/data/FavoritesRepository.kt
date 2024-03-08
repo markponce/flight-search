@@ -12,5 +12,5 @@ interface FavoritesRepository {
 
     suspend fun insertFavoriteRoute(favorite: Favorite)
 
-    suspend fun deleteFavoriteRoute(departureCode: String, destinationCode: String)
+    suspend fun deleteFavoriteRoute(favorite: Favorite)
 }

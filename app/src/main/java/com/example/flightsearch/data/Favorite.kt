@@ -23,7 +23,8 @@ fun Favorite.toFlight(): Flight {
     return Flight(
         depart = Airport(code = departureCode),
         arrive = Airport(code = destinationCode),
-        isFavorite = true
+        isFavorite = true,
+        favId = id
     )
 }
 
@@ -42,6 +43,7 @@ fun FavoriteWithName.toFlight(): Flight {
     return Flight(
         depart = Airport(code = departureCode, name = departureName),
         arrive = Airport(code = destinationCode, name = destinationName),
-        isFavorite = true
+        isFavorite = true,
+        favId = id,
     )
 }
