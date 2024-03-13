@@ -1,8 +1,9 @@
 package com.example.flightsearch.data
 
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class OfflineFavoritesRepository(private val favoriteDao: FavoriteDao): FavoritesRepository {
+class OfflineFavoritesRepository @Inject constructor(private val favoriteDao: FavoriteDao): FavoritesRepository {
     override fun getAllFavoriteRoutes(): Flow<List<FavoriteWithName>> = favoriteDao.getAllFavoriteRoutes()
 
     override fun getFavoriteRoutesByDepartureCode(code: String): Flow<List<Favorite>>   =favoriteDao.getFavoriteRoutesByDepartureCode(code)
