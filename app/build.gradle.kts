@@ -3,7 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
 //    id("com.google.devtools.ksp") version "1.8.21-1.0.11"
     id("com.google.devtools.ksp") version "1.9.20-1.0.14"
-
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -76,5 +77,14 @@ dependencies {
     implementation("androidx.room:room-ktx:${rootProject.extra["room_version"]}")
 
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    implementation("com.google.dagger:hilt-android:2.46")
+    kapt("com.google.dagger:hilt-android-compiler:2.46")
+}
+
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }
 

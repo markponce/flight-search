@@ -10,6 +10,7 @@ import com.example.flightsearch.data.Favorite
 import com.example.flightsearch.data.FavoritesRepository
 import com.example.flightsearch.data.UserPreferencesRepository
 import com.example.flightsearch.data.toFlight
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.StateFlow
@@ -22,6 +23,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 data class UiState(
     val searchText: String = "",
@@ -31,10 +33,11 @@ data class UiState(
     val favoriteFlights: List<Flight> = emptyList(),
 )
 
-class SearchViewModel(
+@HiltViewModel
+class SearchViewModel @Inject constructor(
     private val airportsRepository: AirportsRepository,
     private val favoritesRepository: FavoritesRepository,
-    private val userPreferencesRepository: UserPreferencesRepository
+//    private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState())

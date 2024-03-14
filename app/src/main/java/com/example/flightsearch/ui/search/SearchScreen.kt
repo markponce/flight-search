@@ -55,7 +55,7 @@ import com.example.flightsearch.data.Airport
 import com.example.flightsearch.data.FakeData
 import com.example.flightsearch.data.Favorite
 import com.example.flightsearch.data.toFlight
-import com.example.flightsearch.ui.AppViewModelProvider
+//import com.example.flightsearch.ui.AppViewModelProvider
 import com.example.flightsearch.ui.theme.FlightSearchTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -85,7 +85,7 @@ fun SearchScreen(
 @Composable
 fun SearchScreenBody(modifier: Modifier = Modifier) {
 
-    val searchViewModel: SearchViewModel = viewModel(factory = AppViewModelProvider.Factory)
+    val searchViewModel: SearchViewModel = viewModel()
     val uiState by searchViewModel.uiState.collectAsState()
 
     Column(modifier = modifier.padding(16.dp)) {
